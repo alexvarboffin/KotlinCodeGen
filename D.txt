@@ -25,6 +25,9 @@ https://www.youtube.com/watch?v=yGtll-nWeYY&ab_channel=Heisenbug%E2%80%94%D0%BA%
 
 
 === https://www.youtube.com/watch?v=xJ2thjlhBIw&ab_channel=%D0%A4%D0%9A%D0%9D%D0%92%D0%A8%D0%AD
+https://apps.theodo.com/article/customize-openapi-generator-output-for-your-android-app
+
+https://medium.com/@kostadin.georgiev90/integrating-openapi-into-android-1d5cd9301f0c
 
 // В commonMain
    val apiClient = ApiClient("https://your.api.url", null)
