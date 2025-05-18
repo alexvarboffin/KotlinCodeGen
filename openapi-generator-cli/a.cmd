@@ -1,0 +1,4 @@
+java -jar openapi-generator-cli.jar version
+rem java -jar openapi-generator-cli.jar generate -i http://petstore.swagger.io/v2/swagger.json --api-package com.petstore.client.api --model-package com.petstore.client.model --invoker-package com.petstore.client.invoker --group-id com.petstore--artifact-id spring-openapi-generator-api-client --artifact-version 0.0.1-SNAPSHOT -g java -p java8=true --library resttemplate -o spring-openapi-generator-api-client
+java -jar openapi-generator-cli.jar generate -i openapi.json -g kotlin -o ./src/main/kotlin --template-dir ./templates --template-engine-name freemarker --additional-properties library=jvm-ktor,serializationLibrary=kotlinx_serialization
+pause

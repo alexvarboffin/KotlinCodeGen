@@ -1,0 +1,7 @@
+{{#supportingFiles}}
+    {{#-first}}templatingEngine = "mustache"{{/-first}}
+{{#templateType}}
+@template {{.}}
+{{/templateType}}
+{{> {{{templateFile}}}}}
+{{/supportingFiles}} 

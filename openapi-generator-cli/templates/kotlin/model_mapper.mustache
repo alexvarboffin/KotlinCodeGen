@@ -1,0 +1,19 @@
+package {{packageName}}.mappers
+
+import {{packageName}}.models.{{classname}}
+
+object {{classname}}Mapper {
+    fun toMap(model: {{classname}}): Map<String, Any?> = mapOf(
+        {{#vars}}
+        "{{baseName}}" to model.{{name}}{{^last}},{{/last}}
+        {{/vars}}
+    )
+
+    fun fromMap(data: Map<String, Any?>): {{classname}} {
+        return {{classname}}(
+            {{#vars}}
+            data["{{baseName}}"] as {{datatype}}{{^last}},{{/last}}
+            {{/vars}}
+        )
+    }
+} 

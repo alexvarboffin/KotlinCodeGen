@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="openapi-generator-cli">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/openapi-generator-cli.jar!/" />
+      <root url="jar://$PROJECT_DIR$/openapi-generator-cli-7.6.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

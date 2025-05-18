@@ -1,0 +1,27 @@
+- Что сломалось:
+  - Повторяются operationId в нескольких эндпоинтах ('/users_v2/profile', '/comment/{id}', '/auth_v2/login').
+  - Неожиданный атрибут examples в components.schemas.RegisterDto.
+- Как починил:
+  - Для operationId: Сделать уникальными для каждого эндпоинта (например, добавить суффиксы или изменить имена).
+  - Для examples: Удалить или переместить в правильное место по OpenAPI спецификации.
+- В каком файле была ошибка: openapi.json
+- Советы:
+  - Проверяй уникальность operationId для каждого метода.
+  - Используй валидатор OpenAPI перед генерацией.
+  - Не добавляй невалидные поля в схемы (например, examples вне контекста). 
+
+- Что сломалось:
+  - Не создаются кастомные файлы через шаблоны supportingFiles в openapi-generator.
+- Как починил:
+  - Создал правильную структуру директорий: templates/kotlin/supportingFiles/MyUtils.mustache
+  - Обновил config.json с правильным путем к шаблону: "templateFile": "supportingFiles/MyUtils.mustache"
+  - Изменил параметр --global-property supportingFiles=supportingFiles/MyUtils.mustache
+  - Добавил параметр --global-property debugSupportingFiles=true для отладки
+  - Создал резервный скрипт, который создает файлы вручную, если автогенерация не сработала
+- В каком файле была ошибка: команда запуска и структура директорий 
+- Советы:
+  - Проверяй структуру директорий: шаблоны должны быть в /supportingFiles/
+  - Пути в config.json должны соответствовать реальной структуре директорий
+  - Используй --global-property debugSupportingFiles=true для отладки
+  - Проверяй, что имя файла в global-property supportingFiles точно совпадает с реальным именем файла
+  - В крайнем случае, создавай файлы вручную после генерации основного кода 

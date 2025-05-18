@@ -1,0 +1,1891 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/movie/list_params": {
+      "get": {
+        "operationId": "getMovieListParams",
+        "summary": "Получение списка доступных параметров фильтрации",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Список параметров успешно получен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "genres",
+                    "countries",
+                    "years"
+                  ],
+                  "properties": {
+                    "genres": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "value",
+                          "id",
+                          "count"
+                        ],
+                        "properties": {
+                          "value": {
+                            "type": "string"
+                          },
+                          "id": {
+                            "type": "number"
+                          },
+                          "count": {
+                            "type": "number",
+                            "description": "Количество видеоресурсов для этого жанра"
+                          }
+                        }
+                      }
+                    },
+                    "countries": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "value",
+                          "id",
+                          "count"
+                        ],
+                        "properties": {
+                          "value": {
+                            "type": "string"
+                          },
+                          "id": {
+                            "type": "number"
+                          },
+                          "count": {
+                            "type": "number",
+                            "description": "Количество видеоресурсов для этой страны"
+                          }
+                        }
+                      }
+                    },
+                    "years": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "value",
+                          "count"
+                        ],
+                        "properties": {
+                          "value": {
+                            "type": "string"
+                          },
+                          "count": {
+                            "type": "number",
+                            "description": "Количество видеоресурсов для этого года"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Видеоресурсы"
+        ]
+      }
+    },
+    "/movie/list": {
+      "get": {
+        "operationId": "getMoviesList",
+        "summary": "Получение списка фильмов по фильтрам",
+        "parameters": [
+          {
+            "name": "year",
+            "required": false,
+            "in": "query",
+            "description": "Год выпуска",
+            "schema": {}
+          },
+          {
+            "name": "country_id",
+            "required": false,
+            "in": "query",
+            "description": "Страна производства",
+            "schema": {}
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Количество записей на странице",
+            "schema": {}
+          },
+          {
+            "name": "genre_id",
+            "required": false,
+            "in": "query",
+            "description": "Жанр фильма",
+            "schema": {}
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Номер страницы",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список фильмов успешно получен"
+          }
+        },
+        "tags": [
+          "Видеоресурсы"
+        ]
+      }
+    },
+    "/movie/name/ru": {
+      "get": {
+        "operationId": "getFilesByRussianName",
+        "summary": "Поиск файлов по русскому названию фильма",
+        "parameters": [
+          {
+            "name": "name",
+            "required": true,
+            "in": "query",
+            "description": "Русское название фильма",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Файлы успешно найдены"
+          },
+          "400": {
+            "description": "Отсутствует параметр названия"
+          }
+        },
+        "tags": [
+          "Видеоресурсы"
+        ]
+      }
+    },
+    "/movie/list_v2": {
+      "get": {
+        "operationId": "getMoviesListV2",
+        "summary": "Получение списка фильмов по фильтрам (v2)",
+        "parameters": [
+          {
+            "name": "genre_ids",
+            "required": false,
+            "in": "query",
+            "description": "Массив ID жанров",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "country_ids",
+            "required": false,
+            "in": "query",
+            "description": "Массив ID стран производства",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "years",
+            "required": false,
+            "in": "query",
+            "description": "Массив годов выпуска",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Количество записей на странице",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "resource_type",
+            "required": false,
+            "in": "query",
+            "description": "Тип ресурса: 0 - все, 1 - только фильмы, 2 - только сериалы",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "imdb_rating_sort",
+            "required": false,
+            "in": "query",
+            "description": "Сортировка по рейтингу IMDb (asc или desc)",
+            "schema": {
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "kinopoisk_rating_sort",
+            "required": false,
+            "in": "query",
+            "description": "Сортировка по рейтингу Кинопоиска (asc или desc)",
+            "schema": {
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "local_rating_sort",
+            "required": false,
+            "in": "query",
+            "description": "Сортировка по локальному рейтингу (asc или desc)",
+            "schema": {
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "imdb_rating",
+            "required": false,
+            "in": "query",
+            "description": "Фильтр по рейтингу IMDb (формат: 7 или 7-9)",
+            "schema": {}
+          },
+          {
+            "name": "kinopoisk_rating",
+            "required": false,
+            "in": "query",
+            "description": "Фильтр по рейтингу Кинопоиска (формат: 7 или 7-9)",
+            "schema": {}
+          },
+          {
+            "name": "local_rating",
+            "required": false,
+            "in": "query",
+            "description": "Фильтр по локальному рейтингу (формат: 7 или 7-9)",
+            "schema": {}
+          },
+          {
+            "name": "title",
+            "required": false,
+            "in": "query",
+            "description": "Русское название фильма для поиска",
+            "schema": {}
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Номер страницы",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список фильмов успешно получен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "movies": {
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "originalTitle": {
+                            "type": "string"
+                          },
+                          "year": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "genres": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "countries": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "poster": {
+                            "type": "string"
+                          },
+                          "isSeries": {
+                            "type": "boolean"
+                          },
+                          "ratings": {
+                            "type": "object",
+                            "properties": {
+                              "imdb": {
+                                "type": "object",
+                                "nullable": true,
+                                "properties": {
+                                  "rating": {
+                                    "type": "number",
+                                    "format": "float"
+                                  },
+                                  "votes": {
+                                    "type": "integer"
+                                  }
+                                }
+                              },
+                              "kinopoisk": {
+                                "type": "object",
+                                "nullable": true,
+                                "properties": {
+                                  "rating": {
+                                    "type": "number",
+                                    "format": "float"
+                                  },
+                                  "votes": {
+                                    "type": "integer"
+                                  }
+                                }
+                              },
+                              "local": {
+                                "type": "object",
+                                "nullable": true,
+                                "properties": {
+                                  "rating": {
+                                    "type": "number",
+                                    "format": "float"
+                                  },
+                                  "votes": {
+                                    "type": "integer"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "integer"
+                        },
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "pages": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "filters": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Видеоресурсы"
+        ]
+      }
+    },
+    "/movie/bestsellers/categories": {
+      "get": {
+        "operationId": "getBestsellerCategories",
+        "summary": "Получение списка категорий бестселлеров",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Список категорий бестселлеров успешно получен"
+          }
+        },
+        "tags": [
+          "Видеоресурсы"
+        ]
+      }
+    },
+    "/movie/bestsellers/all": {
+      "get": {
+        "operationId": "getAllBestsellers",
+        "summary": "Получение списка бестселлеров по категориям",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Список бестселлеров успешно получен"
+          }
+        },
+        "tags": [
+          "Видеоресурсы"
+        ]
+      }
+    },
+    "/movie/bestsellers/{categoryId}": {
+      "get": {
+        "operationId": "getBestsellersByCategory",
+        "summary": "Получение бестселлеров по конкретной категории",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": true,
+            "in": "path",
+            "description": "ID категории бестселлеров",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Бестселлеры категории успешно получены"
+          },
+          "404": {
+            "description": "Категория бестселлеров не найдена"
+          }
+        },
+        "tags": [
+          "Видеоресурсы"
+        ]
+      }
+    },
+    "/movie/{id}": {
+      "get": {
+        "operationId": "getMovieById",
+        "summary": "Получение фильма по ID",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID фильма",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Фильм успешно найден"
+          },
+          "400": {
+            "description": "Некорректный ID фильма"
+          },
+          "404": {
+            "description": "Фильм не найден"
+          }
+        },
+        "tags": [
+          "Видеоресурсы"
+        ]
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "operationId": "register",
+        "summary": "Регистрация пользователя",
+        "description": "Создает нового пользователя в системе с указанными данными и выдает JWT-токен для авторизации",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Пользователь успешно создан",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string",
+                      "description": "JWT токен для авторизации",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "username": {
+                          "type": "string",
+                          "example": "user123"
+                        },
+                        "firstName": {
+                          "type": "string",
+                          "example": "Иван",
+                          "nullable": true
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "example": "Иванов",
+                          "nullable": true
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2023-01-01T00:00:00Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка валидации или пользователь уже существует",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Пользователь с таким именем уже существует"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Bad Request"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Аутентификация"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "login",
+        "summary": "Вход пользователя",
+        "description": "Аутентифицирует пользователя по имени пользователя и паролю, возвращает JWT-токен",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешный вход",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string",
+                      "description": "JWT токен для авторизации",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "username": {
+                          "type": "string",
+                          "example": "user123"
+                        },
+                        "firstName": {
+                          "type": "string",
+                          "example": "Иван",
+                          "nullable": true
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "example": "Иванов",
+                          "nullable": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Неверные учетные данные",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Неверные учетные данные"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Аутентификация"
+        ]
+      }
+    },
+    "/user/profile": {
+      "get": {
+        "operationId": "getProfile",
+        "summary": "Получение профиля пользователя",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Профиль получен"
+          }
+        },
+        "tags": [
+          "Пользователи"
+        ]
+      },
+      "put": {
+        "operationId": "updateProfile",
+        "summary": "Обновление профиля пользователя",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Профиль обновлен"
+          }
+        },
+        "tags": [
+          "Пользователи"
+        ]
+      }
+    },
+    "/devices": {
+      "get": {
+        "operationId": "getUserDevices",
+        "summary": "Получение устройств пользователя",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Список устройств получен"
+          }
+        },
+        "tags": [
+          "Устройства"
+        ]
+      }
+    },
+    "/devices/register": {
+      "post": {
+        "operationId": "registerDevice",
+        "summary": "Регистрация устройства",
+        "parameters": [
+          {
+            "name": "x-forwarded-for",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Устройство зарегистрировано"
+          }
+        },
+        "tags": [
+          "Устройства"
+        ]
+      }
+    },
+    "/devices/activity": {
+      "post": {
+        "operationId": "updateActivity",
+        "summary": "Обновление активности устройства",
+        "parameters": [
+          {
+            "name": "x-forwarded-for",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user-agent",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Активность устройства обновлена"
+          }
+        },
+        "tags": [
+          "Устройства"
+        ]
+      }
+    },
+    "/devices/{id}/allow-auto-connect": {
+      "patch": {
+        "operationId": "updateAllowAutoConnect",
+        "summary": "Обновление настройки автоподключения устройства",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Настройка автоподключения обновлена"
+          }
+        },
+        "tags": [
+          "Устройства"
+        ]
+      }
+    },
+    "/users_v2/profile": {
+      "get": {
+        "operationId": "getProfile",
+        "summary": "Получение профиля пользователя",
+        "description": "Возвращает полную информацию о пользователе из таблицы users",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Профиль пользователя",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ID": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "Login": {
+                      "type": "string",
+                      "example": "user123"
+                    },
+                    "Email": {
+                      "type": "string",
+                      "example": "user@example.com"
+                    },
+                    "IP": {
+                      "type": "string",
+                      "example": "192.168.1.1"
+                    },
+                    "Balans": {
+                      "type": "number",
+                      "example": 100.5
+                    },
+                    "UserGroup": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "ViewActivity": {
+                      "type": "number",
+                      "example": 10
+                    },
+                    "PlayActivity": {
+                      "type": "number",
+                      "example": 5
+                    },
+                    "RegisterDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2023-01-01T00:00:00Z"
+                    },
+                    "UpdateDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2023-01-01T00:00:00Z"
+                    },
+                    "Mode": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "ipfw_rule": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "Enabled": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "BanComments": {
+                      "type": "string",
+                      "example": "Причина бана",
+                      "nullable": true
+                    },
+                    "BanDateEnd": {
+                      "type": "string",
+                      "format": "date",
+                      "example": "2023-01-01",
+                      "nullable": true
+                    },
+                    "KlypDateEnd": {
+                      "type": "string",
+                      "format": "date",
+                      "example": "2023-01-01",
+                      "nullable": true
+                    },
+                    "BillingId": {
+                      "type": "number",
+                      "example": 123,
+                      "nullable": true
+                    },
+                    "Preferences": {
+                      "type": "string",
+                      "example": "{}",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Пользователь не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Пользователь не найден"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Пользователи v2(бд самой синемы)"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/auth_v2/login": {
+      "post": {
+        "operationId": "login",
+        "summary": "Вход пользователя",
+        "description": "Аутентифицирует пользователя по имени пользователя и паролю (пароль хешируется в MD5 перед проверкой), возвращает JWT-токен. Для дальнейшего использования токена в защищенных маршрутах, добавьте его в заголовок Authorization в формате: Bearer {token}",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешный вход",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string",
+                      "description": "JWT токен для авторизации. Используйте в формате: Authorization: Bearer {token}",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "username": {
+                          "type": "string",
+                          "example": "user123"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Неверные учетные данные",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Неверные учетные данные"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Аутентификация v2(бд самой синемы)"
+        ]
+      }
+    },
+    "/favorites": {
+      "get": {
+        "operationId": "getAllBookmarks",
+        "summary": "Получение всех закладок пользователя",
+        "description": "Возвращает список всех закладок текущего аутентифицированного пользователя",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Список закладок",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "userId": {
+                        "type": "number",
+                        "example": 42
+                      },
+                      "movieId": {
+                        "type": "number",
+                        "example": 123
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователь не авторизован"
+          }
+        },
+        "tags": [
+          "Закладки (бд самой синемы)"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "put": {
+        "operationId": "createBookmark",
+        "summary": "Создание новой закладки",
+        "description": "Добавляет фильм в закладки пользователя",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Данные для создания закладки",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBookmarkDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Закладка успешно создана",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "userId": {
+                      "type": "number",
+                      "example": 42
+                    },
+                    "movieId": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Закладка уже существует"
+          }
+        },
+        "tags": [
+          "Закладки (бд самой синемы)"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/favorites/{id}": {
+      "get": {
+        "operationId": "getBookmarkById",
+        "summary": "Получение закладки по ID",
+        "description": "Возвращает информацию о закладке по ее ID",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID закладки",
+            "example": 1,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Информация о закладке",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "userId": {
+                      "type": "number",
+                      "example": 42
+                    },
+                    "movieId": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Закладка не найдена"
+          }
+        },
+        "tags": [
+          "Закладки (бд самой синемы)"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "operationId": "updateBookmark",
+        "summary": "Обновление закладки",
+        "description": "Обновляет существующую закладку пользователя",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID закладки",
+            "example": 1,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Данные для обновления закладки",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBookmarkDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Закладка успешно обновлена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "userId": {
+                      "type": "number",
+                      "example": 42
+                    },
+                    "movieId": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Закладка не найдена"
+          }
+        },
+        "tags": [
+          "Закладки (бд самой синемы)"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "deleteBookmark",
+        "summary": "Удаление закладки",
+        "description": "Удаляет закладку пользователя",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID закладки",
+            "example": 1,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Закладка успешно удалена"
+          },
+          "404": {
+            "description": "Закладка не найдена"
+          }
+        },
+        "tags": [
+          "Закладки (бд самой синемы)"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/favorites/movie/{movieId}": {
+      "get": {
+        "operationId": "getBookmarkByMovieId",
+        "summary": "Получение закладки по ID фильма",
+        "description": "Возвращает информацию о закладке для конкретного фильма",
+        "parameters": [
+          {
+            "name": "movieId",
+            "required": true,
+            "in": "path",
+            "description": "ID фильма",
+            "example": 123,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Информация о закладке",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "userId": {
+                      "type": "number",
+                      "example": 42
+                    },
+                    "movieId": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Закладка не найдена"
+          }
+        },
+        "tags": [
+          "Закладки (бд самой синемы)"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/history": {
+      "get": {
+        "operationId": "findAllByUserId",
+        "summary": "Получение всех записей истории просмотров пользователя",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Успешное получение списка истории"
+          }
+        },
+        "tags": [
+          "История просмотров"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "operationId": "createOrUpdate",
+        "summary": "Создание или обновление записи истории просмотров",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateHistoryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Запись успешно создана/обновлена"
+          }
+        },
+        "tags": [
+          "История просмотров"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/history/{id}": {
+      "get": {
+        "operationId": "findById",
+        "summary": "Получение записи истории по ID",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID записи истории",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное получение записи"
+          },
+          "404": {
+            "description": "Запись не найдена"
+          }
+        },
+        "tags": [
+          "История просмотров"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/history/movie/{movieId}": {
+      "get": {
+        "operationId": "findByMovieId",
+        "summary": "Получение записи истории по ID фильма",
+        "parameters": [
+          {
+            "name": "movieId",
+            "required": true,
+            "in": "path",
+            "description": "ID фильма",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное получение записи"
+          }
+        },
+        "tags": [
+          "История просмотров"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/history/file/{fileId}": {
+      "get": {
+        "operationId": "findByFileId",
+        "summary": "Получение записи истории по ID файла",
+        "parameters": [
+          {
+            "name": "fileId",
+            "required": true,
+            "in": "path",
+            "description": "ID файла",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное получение записи"
+          }
+        },
+        "tags": [
+          "История просмотров"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/comment/movie/{movieId}": {
+      "get": {
+        "operationId": "findAllByMovieId",
+        "summary": "Получение всех комментариев к фильму",
+        "description": "Возвращает список всех комментариев к конкретному фильму, отсортированный по дате создания (сначала новые).",
+        "parameters": [
+          {
+            "name": "movieId",
+            "required": true,
+            "in": "path",
+            "description": "ID фильма",
+            "example": 35830,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное получение списка комментариев",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true,
+                      "description": "Флаг успешного выполнения запроса"
+                    },
+                    "data": {
+                      "type": "array",
+                      "description": "Массив комментариев к фильму",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "comment_id": {
+                            "type": "number",
+                            "example": 123,
+                            "description": "Уникальный идентификатор комментария"
+                          },
+                          "user_id": {
+                            "type": "number",
+                            "example": 95634,
+                            "description": "Идентификатор пользователя, оставившего комментарий"
+                          },
+                          "text": {
+                            "type": "string",
+                            "example": "Отличный фильм! Очень понравился.",
+                            "description": "Текст комментария"
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2023-06-15T14:30:20.000Z",
+                            "description": "Дата и время создания комментария"
+                          },
+                          "username": {
+                            "type": "string",
+                            "example": "chepelev",
+                            "description": "Логин пользователя, оставившего комментарий"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Некорректный запрос",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Ошибка при получении комментариев"
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Некорректный ID фильма"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Не авторизован",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Комментарии к фильмам"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/comment/{id}": {
+      "get": {
+        "operationId": "findById",
+        "summary": "Получение комментария по ID",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID комментария",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное получение комментария"
+          },
+          "404": {
+            "description": "Комментарий не найден"
+          }
+        },
+        "tags": [
+          "Комментарии к фильмам"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/comment": {
+      "post": {
+        "operationId": "create",
+        "summary": "Создание нового комментария к фильму",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCommentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Комментарий успешно создан"
+          }
+        },
+        "tags": [
+          "Комментарии к фильмам"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "",
+    "description": "",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "RegisterDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "Имя пользователя для регистрации",
+            "example": "user123",
+            "minLength": 2,
+            "maxLength": 50,
+            "format": "text",
+            "examples": {
+              "correct": {
+                "value": "user123",
+                "summary": "Корректное имя пользователя"
+              },
+              "tooShort": {
+                "value": "u",
+                "summary": "Слишком короткое имя пользователя (ошибка)"
+              },
+              "tooLong": {
+                "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "summary": "Слишком длинное имя пользователя (ошибка)"
+              }
+            }
+          },
+          "password": {
+            "type": "string",
+            "description": "Пароль пользователя",
+            "example": "SecurePass123!",
+            "minLength": 2,
+            "maxLength": 100,
+            "format": "password",
+            "examples": {
+              "strong": {
+                "value": "SecurePass123!",
+                "summary": "Надежный пароль"
+              },
+              "weak": {
+                "value": "12",
+                "summary": "Слабый пароль (но допустимый)"
+              }
+            }
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Имя пользователя",
+            "example": "Иван",
+            "nullable": true,
+            "maxLength": 50,
+            "examples": {
+              "correct": {
+                "value": "Иван",
+                "summary": "Корректное имя"
+              },
+              "cyrillicOnly": {
+                "value": "John",
+                "summary": "Имя латиницей (допустимо)"
+              }
+            }
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Фамилия пользователя",
+            "example": "Иванов",
+            "nullable": true,
+            "maxLength": 50,
+            "examples": {
+              "correct": {
+                "value": "Иванов",
+                "summary": "Корректная фамилия"
+              },
+              "cyrillicOnly": {
+                "value": "Smith",
+                "summary": "Фамилия латиницей (допустимо)"
+              }
+            }
+          }
+        },
+        "required": [
+          "username",
+          "password"
+        ]
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "Имя пользователя",
+            "example": "user123"
+          },
+          "password": {
+            "type": "string",
+            "description": "Пароль пользователя",
+            "example": "password123"
+          }
+        },
+        "required": [
+          "username",
+          "password"
+        ]
+      },
+      "CreateBookmarkDto": {
+        "type": "object",
+        "properties": {
+          "movie_id": {
+            "type": "number",
+            "description": "ID фильма для добавления в закладки",
+            "example": 1
+          }
+        },
+        "required": [
+          "movie_id"
+        ]
+      },
+      "UpdateBookmarkDto": {
+        "type": "object",
+        "properties": {
+          "movie_id": {
+            "type": "number",
+            "description": "ID фильма для обновления закладки",
+            "example": 2
+          }
+        }
+      },
+      "CreateHistoryDto": {
+        "type": "object",
+        "properties": {
+          "movieId": {
+            "type": "number",
+            "description": "ID фильма",
+            "example": 123
+          },
+          "fileId": {
+            "type": "number",
+            "description": "ID файла",
+            "example": 456
+          },
+          "positionSeconds": {
+            "type": "number",
+            "description": "Позиция воспроизведения в секундах",
+            "example": 120.5
+          },
+          "contentDuration": {
+            "type": "number",
+            "description": "Общая длительность контента в секундах",
+            "example": 3600
+          }
+        },
+        "required": [
+          "movieId",
+          "fileId",
+          "positionSeconds"
+        ]
+      },
+      "CreateCommentDto": {
+        "type": "object",
+        "properties": {
+          "movieId": {
+            "type": "number",
+            "description": "ID фильма к которому оставляется комментарий",
+            "example": 123
+          },
+          "text": {
+            "type": "string",
+            "description": "Текст комментария",
+            "example": "Отличный фильм! Очень понравился.",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "movieId",
+          "text"
+        ]
+      }
+    }
+  }
+}

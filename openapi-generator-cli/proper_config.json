@@ -1,0 +1,8 @@
+{
+  "supportingFiles": [
+    {
+      "templateFile": "MyUtils.mustache",
+      "destinationFilename": "src/main/kotlin/E/utils/MyUtils.kt"
+    }
+  ]
+} 

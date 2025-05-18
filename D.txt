@@ -1,0 +1,43 @@
+https://openapi-generator.tech/docs/usage/
+https://github.com/OpenAPITools/openapi-generator/tree/master
+https://github.com/OpenAPITools/openapi-generator?tab=readme-ov-file#to-generate-a-sample-client-library
+https://stepin.name/en/technoblog/115-kotlin-openapi-client-generator/
+https://gist.github.com/gcatanese/6b84046488c4d62ac0eb4110a9cb52e8#file-mygoclientcodegen-java
+https://dev.to/adyen/mustache-templates-with-openapi-specs-4klo
+https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator-gradle-plugin
+
+
+https://www.youtube.com/watch?v=C4Lgz-VPQco&ab_channel=JohnDoherty&sttick=0
+https://www.youtube.com/watch?v=DEdVGeua498&ab_channel=IT%D0%BA%D0%B0%D0%BA%D0%9A%D0%BE%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D0%BE%D1%80
+
+@@@
+https://github.com/OpenAPITools/openapi-generator
+
+@@@
+https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator-gradle-plugin/README.adoc
+
+https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator-gradle-plugin/README.adoc
+
+https://www.baeldung.com/spring-boot-openapi-generator-custom-templates
+https://github.com/OpenAPITools/openapi-petstore/tree/master
+https://stepin.name/technoblog/115-kotlin-openapi-client-generator/
+https://www.youtube.com/watch?v=yGtll-nWeYY&ab_channel=Heisenbug%E2%80%94%D0%BA%D0%BE%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D1%8F%D0%BF%D0%BE%D1%82%D0%B5%D1%81%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8E
+
+
+=== https://www.youtube.com/watch?v=xJ2thjlhBIw&ab_channel=%D0%A4%D0%9A%D0%9D%D0%92%D0%A8%D0%AD
+
+// В commonMain
+   val apiClient = ApiClient("https://your.api.url", null)
+   val api = DefaultApi(apiClient)
+   // Используй suspend-функции для запросов
+
+
+
+   class MovieRemoteDataSource(private val api: DefaultApi) {
+       suspend fun getComments(movieId: BigDecimal): List<Comment> {
+           val response = api.findAllByMovieId(movieId)
+           // Маппим DTO в domain-модель
+           return response.body().data.map { it.toDomain() }
+       }
+   }
+
