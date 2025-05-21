@@ -29,6 +29,11 @@ https://apps.theodo.com/article/customize-openapi-generator-output-for-your-andr
 
 https://medium.com/@kostadin.georgiev90/integrating-openapi-into-android-1d5cd9301f0c
 
+@@@
+https://www.youtube.com/watch?v=qWFSKAmE1YM&ab_channel=JPoint%2CJoker%D0%B8JUGru%E2%80%94Java-%D0%BA%D0%BE%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D0%B8
+@@@
+
+
 // В commonMain
    val apiClient = ApiClient("https://your.api.url", null)
    val api = DefaultApi(apiClient)
