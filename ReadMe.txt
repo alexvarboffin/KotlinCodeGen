@@ -3,6 +3,21 @@
 ls openapi-generator-cli/my-codegen/build/libs
 
 
+
+Генерирует только файлы нашего генераторва
+
+& "C:\Program Files\Java\jdk-17\bin\java.exe" -cp
+     "openapi-generator-cli\openapi-generator-cli-7.13.0.jar;openapi-generator-cli\my-codegen\build\
+     bs\my-codegen-1.0.0.jar" org.openapitools.codegen.OpenAPIGenerator generate -i
+     openapi-generator-cli/Example/openapi.json -g my-codegen -o generated_custom --skip-validate-sp
+
+& "C:\Program Files\Java\jdk-17\bin\java.exe" -cp                                                │
+│ "openapi-generator-cli\openapi-generator-cli-7.13.0.jar;openapi-generator-cli\my-codegen\build\l │
+│ ibs\my-codegen-1.0.0.jar" org.openapitools.codegen.OpenAPIGenerator generate -i                  │
+│ openapi-generator-cli/Example/openapi.json -g my-codegen -o generated_custom                     │
+│ --skip-validate-spec
+
+
 https://openapi-generator.tech/docs/usage/
 https://github.com/OpenAPITools/openapi-generator/tree/master
 https://github.com/OpenAPITools/openapi-generator?tab=readme-ov-file#to-generate-a-sample-client-library

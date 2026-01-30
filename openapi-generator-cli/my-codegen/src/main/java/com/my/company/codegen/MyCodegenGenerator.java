@@ -1,13 +1,14 @@
 package com.my.company.codegen;
 
 import org.openapitools.codegen.*;
+import org.openapitools.codegen.languages.KotlinClientCodegen;
 import org.openapitools.codegen.model.*;
 import io.swagger.models.properties.*;
 
 import java.util.*;
 import java.io.File;
 
-public class MyCodegenGenerator extends DefaultCodegen implements CodegenConfig {
+public class MyCodegenGenerator extends KotlinClientCodegen implements CodegenConfig {
 
   // source folder where to write the files
   protected String sourceFolder = "src";
@@ -20,7 +21,7 @@ public class MyCodegenGenerator extends DefaultCodegen implements CodegenConfig 
    * @see     org.openapitools.codegen.CodegenType
    */
   public CodegenType getTag() {
-    return CodegenType.OTHER;
+    return CodegenType.CLIENT;
   }
 
   /**
@@ -64,7 +65,7 @@ public class MyCodegenGenerator extends DefaultCodegen implements CodegenConfig 
    * @return A string value for the help message
    */
   public String getHelp() {
-    return "Generates a my-codegen client library.";
+    return "Generates a my-codegen client library based on Kotlin.";
   }
 
   public MyCodegenGenerator() {
@@ -73,49 +74,25 @@ public class MyCodegenGenerator extends DefaultCodegen implements CodegenConfig 
     // set the output folder here
     outputFolder = "generated-code/my-codegen";
 
-    /**
-     * Models.  You can write model files using the modelTemplateFiles map.
-     * if you want to create one template for file, you can do so here.
-     * for multiple files for model, just put another entry in the `modelTemplateFiles` with
-     * a different extension
-     */
-    modelTemplateFiles.put(
-      "model.mustache", // the template to use
-      ".sample");       // the extension for each file to write
-
-    /**
-     * Api classes.  You can write classes for each Api file with the apiTemplateFiles map.
-     * as with models, add multiple entries with different extensions for multiple files per
-     * class
-     */
-    apiTemplateFiles.put(
-      "api.mustache",   // the template to use
-      ".sample");       // the extension for each file to write
+    // NOTE: We do NOT override modelTemplateFiles or apiTemplateFiles here.
+    // By calling super(), KotlinClientCodegen sets up "model.mustache" -> ".kt"
+    // and "api.mustache" -> ".kt".
 
     /**
      * Template Location.  This is the location which templates will be read from.  The generator
      * will use the resource stream to attempt to read the templates.
      */
-    templateDir = "my-codegen";
+    templateDir = "kotlin-client"; 
 
     /**
      * Api Package.  Optional, if needed, this can be used in templates
      */
-    apiPackage = "org.openapitools.api";
+    // apiPackage = "org.openapitools.api"; // Use default or passed via CLI
 
     /**
      * Model Package.  Optional, if needed, this can be used in templates
      */
-    modelPackage = "org.openapitools.model";
-
-    /**
-     * Reserved words.  Override this with reserved words specific to your language
-     */
-    reservedWords = new HashSet<String> (
-      Arrays.asList(
-        "sample1",  // replace with static values
-        "sample2")
-    );
+    // modelPackage = "org.openapitools.model"; // Use default or passed via CLI
 
     /**
      * Additional Properties.  These values can be passed to the templates and
@@ -128,19 +105,10 @@ public class MyCodegenGenerator extends DefaultCodegen implements CodegenConfig 
      * entire object tree available.  If the input file has a suffix of `.mustache
      * it will be processed by the template engine.  Otherwise, it will be copied
      */
+    // You can still add YOUR extra files
     supportingFiles.add(new SupportingFile("myFile.mustache",   // the input template or file
       "",                                                       // the destination folder, relative `outputFolder`
       "myFile.sample")                                          // the output file
-    );
-
-    /**
-     * Language Specific Primitives.  These types will not trigger imports by
-     * the client generator
-     */
-    languageSpecificPrimitives = new HashSet<String>(
-      Arrays.asList(
-        "Type1",      // replace these with your types
-        "Type2")
     );
   }
 
