@@ -85,16 +85,6 @@ public class MyCodegenGenerator extends KotlinClientCodegen implements CodegenCo
     templateDir = "kotlin-client"; 
 
     /**
-     * Api Package.  Optional, if needed, this can be used in templates
-     */
-    // apiPackage = "org.openapitools.api"; // Use default or passed via CLI
-
-    /**
-     * Model Package.  Optional, if needed, this can be used in templates
-     */
-    // modelPackage = "org.openapitools.model"; // Use default or passed via CLI
-
-    /**
      * Additional Properties.  These values can be passed to the templates and
      * are available in models, apis, and supporting files
      */
@@ -110,7 +100,17 @@ public class MyCodegenGenerator extends KotlinClientCodegen implements CodegenCo
       "",                                                       // the destination folder, relative `outputFolder`
       "myFile.sample")                                          // the output file
     );
+
+    // Добавляем генерацию репозиториев
+    apiTemplateFiles.put("api_repository.mustache", "RepositoryImpl.kt");
+
+    // Добавляем вспомогательный класс ApiExecutor
+    supportingFiles.add(new SupportingFile("api_executor.mustache",
+      (sourceFolder + File.separator + packageName.replace('.', File.separatorChar) + File.separator + "infrastructure").replace("/", File.separator),
+      "ApiExecutor.kt")
+    );
   }
+
 
   /**
    * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
