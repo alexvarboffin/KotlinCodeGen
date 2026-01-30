@@ -1,0 +1,2 @@
+"C:\Program Files\Java\jdk-17\bin\java.exe" -cp openapi-generator-cli/Example/openapi.json -g my-codegen -o generated_custom --global-property apis,models,supportingFiles,infrastructure --additional-properties "library=jvm-ktor,serializationLibrary=kotlinx_serialization,useSealedClasses=true,oneOfInterfaces=true,packageName=a.a.a" --skip-validate-spec
+pause

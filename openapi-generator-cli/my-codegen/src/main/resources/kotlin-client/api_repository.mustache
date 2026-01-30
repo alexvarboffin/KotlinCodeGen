@@ -1,0 +1,35 @@
+package {{apiPackage}}.repository
+
+import {{apiPackage}}.{{classname}}
+import {{modelPackage}}.*
+import {{packageName}}.infrastructure.ApiExecutor
+import {{packageName}}.infrastructure.HttpResponse
+
+{{#description}}
+/**
+ * {{description}}
+ */
+{{/description}}
+class {{classname}}RepositoryImpl(
+    private val api: {{classname}},
+    private val executor: ApiExecutor
+) {
+
+{{#operations}}
+{{#operation}}
+    /**
+     * {{summary}}
+     * {{notes}}
+     {{#allParams}}
+     * @param {{paramName}} {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+     {{/allParams}}
+     * @return {{{returnType}}}{{^returnType}}Unit{{/returnType}}
+     */
+    suspend fun {{operationId}}({{#allParams}}{{paramName}}: {{{dataType}}}{{^required}}?{{/required}}{{^-last}}, {{/-last}}{{/allParams}}): {{{returnType}}}{{^returnType}}Unit{{/returnType}} =
+        executor.execute {
+            api.{{operationId}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}})
+        }
+
+{{/operation}}
+{{/operations}}
+}

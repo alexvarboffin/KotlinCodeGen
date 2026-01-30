@@ -8,8 +8,8 @@ REM Копируем шаблон на корневой уровень для с
 copy templates\kotlin\supportingFiles\MyUtils.mustache templates\kotlin\MyUtils.mustache /Y >nul
 
 REM Запуск openapi-generator с правильными параметрами
-java -jar openapi-generator-cli-7.13.0.jar generate ^
-  -i openapi.json ^
+"C:\Program Files\Java\jdk-17\bin\java.exe" -jar openapi-generator-cli-7.13.0.jar generate ^
+  -i Example/openapi.json ^
   -g kotlin ^
   -o tmp/ ^
   --template-dir templates/kotlin ^
@@ -17,6 +17,7 @@ java -jar openapi-generator-cli-7.13.0.jar generate ^
   --additional-properties packageName=E ^
   --global-property supportingFiles=MyUtils.mustache ^
   --global-property apiTests=false,modelTests=false ^
+  --global-property packageName=ru.lds.online.v1 ^
   --additional-properties library=jvm-ktor,serializationLibrary=kotlinx_serialization,hideGenerationTimestamp=true ^
   --global-property debugSupportingFiles=true -c config.json
 

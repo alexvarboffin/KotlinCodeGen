@@ -1,0 +1,26 @@
+package {{packageName}}.infrastructure
+
+import {{packageName}}.infrastructure.HttpResponse
+
+class ApiExecutor {
+
+    suspend fun <T : Any> execute(
+        call: suspend () -> HttpResponse<T>
+    ): T {
+        val response = call()
+
+        if (!response.success) {
+            throw ApiException(
+                code = response.response.status.value,
+                message = "HTTP ${response.response.status}"
+            )
+        }
+
+        return response.body()
+    }
+}
+
+class ApiException(
+    val code: Int,
+    message: String
+) : RuntimeException(message)
