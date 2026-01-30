@@ -3,3 +3,6 @@ plugins {
 }
 rootProject.name = "KotlinCodeGen"
 
+include("my-codegen")
+project(":my-codegen").projectDir = file("openapi-generator-cli/my-codegen")
+

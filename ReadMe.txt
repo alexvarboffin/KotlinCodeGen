@@ -1,3 +1,8 @@
+
+.\gradlew :my-codegen:build
+ls openapi-generator-cli/my-codegen/build/libs
+
+
 https://openapi-generator.tech/docs/usage/
 https://github.com/OpenAPITools/openapi-generator/tree/master
 https://github.com/OpenAPITools/openapi-generator?tab=readme-ov-file#to-generate-a-sample-client-library

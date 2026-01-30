@@ -25,7 +25,8 @@ public class MyCodegenGeneratorTest {
     // https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator-cli/src/main/java/org/openapitools/codegen/cmd/Generate.java
     final CodegenConfigurator configurator = new CodegenConfigurator()
               .setGeneratorName("my-codegen") // use this codegen library
-              .setInputSpec("../../../modules/openapi-generator/src/test/resources/2_0/petstore.yaml") // sample OpenAPI file
+              .setInputSpec("../../spec/openapi.json") // sample OpenAPI file
+              .setValidateSpec(false) // Disable spec validation
               // .setInputSpec("https://raw.githubusercontent.com/openapitools/openapi-generator/master/modules/openapi-generator/src/test/resources/2_0/petstore.yaml") // or from the server
               .setOutputDir("out/my-codegen"); // output directory
 
